@@ -1,0 +1,24 @@
+project:
+  name: Project Alpha
+  experiment_id: EXP001
+
+data:
+  start: "2015-01-01"
+  end: null
+  benchmark_ticker: "1306.T"
+  auto_adjust: true
+
+strategy:
+  momentum_lookback_days: 60
+  forward_return_days: 20
+  rebalance_weekday: 4
+  top_n: 10
+  transaction_cost_bps: 15
+  initial_capital: 1000000
+
+filters:
+  min_price: 100
+  min_history_days: 80
+
+output:
+  report_dir: "reports/EXP001"
