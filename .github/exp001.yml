@@ -1,0 +1,44 @@
+
+name: Project Alpha EXP001
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Run EXP001
+        run: python run_exp001.py
+
+      - name: Save analysis results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EXP001-results
+          path: |
+            reports/EXP001/
+            data/processed/
+          if-no-files-found: warn
